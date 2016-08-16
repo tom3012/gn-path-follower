@@ -17,6 +17,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <link rel="import" href="../gn-path-follower.html">
     <link rel="import" href="../../gn-api/gn-api.html">
     <link rel="import" href="../../gn-notification/gn-notification-container.html">
+    <link rel="import" href="../../gn-notification/gn-notification-tts.html">
     <link rel="import" href="../../gn-gps-simulator/gn-gps-simulator.html">
     <link rel="import" href="../../iron-flex-layout/iron-flex-layout-classes.html">
     <link rel="import" href="../../iron-icon/iron-icon.html">
@@ -109,11 +110,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                         interpolation-iter="5"
                         speed="10"></gn-gps-simulator>
 
+      <gn-notification-tts id="tts"></gn-notification-tts>
+
       <div id="map" class="flex">
         <gn-notification-container id="notifications"
                                    hidden="true"
                                    turn-code="[[direction]]"
-                                   distance="[[turnDistance]]"></gn-notification-container>
+                                   distance="[[turnDistance]]"
+                                   locale="en"></gn-notification-container>
         <gn-path-follower id="map"
                           route="{{route.route}}"
                           latitude="[[lat]]"
@@ -137,8 +141,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             var notifications = document.getElementById("notifications")
             notifications.hidden = false;
             this.async(function() {
+              var msg = "We wish you a good ride!"
+              var tts = document.getElementById("tts");
+              tts.text = msg;
               notifications.newestNotification = {
-                title: "We wish you a good ride!"
+                title: msg
               };
             }, 3000);
           }, 500);
