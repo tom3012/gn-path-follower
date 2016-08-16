@@ -64,16 +64,25 @@ Call the `startSimulation()` method and the position will move according to the 
 <paper-button on-tap="sim.restartSimulation()">reset</paper-button>
 
 <gn-gps-simulator id="sim"
-                  route="{{route}}"
+                  route="{{route.route}}"
                   longitude="{{lon}}"
-                  latitude="{{lat}}"></gn-gps-simulator>
+                  latitude="{{lat}}"
+                  interpolation-iter="5"
+                  speed="10"></gn-gps-simulator>
 
-<gn-path-follower latitude="[[lat]]"
-                  longitude="[[lon]]"></gn-path-follower>
+<div id="map" class="flex">
+  <gn-notification-container id="notifications"
+                             hidden="true"
+                             turn-code="[[direction]]"
+                             distance="[[turnDistance]]"
+                             locale="en"></gn-notification-container>
+  <gn-path-follower id="map"
+                    route="{{route.route}}"
+                    latitude="[[lat]]"
+                    longitude="[[lon]]"
+                    onpath="{{onpath}}"
+                    dist="{{distance}}"
+                    turn-code="{{direction}}"
+                    turn-dist="{{turnDistance}}"></gn-path-follower>
+  </div>
 ```
-
-## TODO
-
-### In Progress
-
-- Caching of map data to avoid "flickering" (doesn't apply for Google maps because of license restrictions)
